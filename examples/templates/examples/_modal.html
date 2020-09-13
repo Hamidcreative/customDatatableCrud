@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+<div class="modal fade" id="contactModal" role="dialog">
+        <form method="POST" id="contact-form" enctype="multipart/form-data" action="{% url 'multiple_edit' %}">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Multiple Rows</h4>
+                        <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        {{ form|crispy   }}
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" id="contactSubmit" class="btn btn-success">Send</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>

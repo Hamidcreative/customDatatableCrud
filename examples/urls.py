@@ -16,6 +16,8 @@ urlpatterns = [
     path('read/<int:pk>', views.BookReadView.as_view(), name='read_book'),
     path('delete/<int:pk>', views.BookDeleteView.as_view(), name='delete_book'),
     path('books/', views.books, name='books'),
+    path('multiple_books_edit/', views.multiple_edit, name='multiple_edit'),
+    path('multiple_book_delete/', views.multiple_delete, name='multiple_delete'),
 ]
 
 

@@ -34,3 +34,9 @@ class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class Bookform(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title','author','price']

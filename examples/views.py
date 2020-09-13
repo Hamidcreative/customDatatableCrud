@@ -4,6 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from rest_framework import viewsets, permissions, filters, mixins, generics, status
+
 from bootstrap_modal_forms.generic import (
     BSModalLoginView,
     BSModalFormView,
@@ -15,12 +16,13 @@ from bootstrap_modal_forms.generic import (
 
 from .forms import (
     BookModelForm,
+    Bookform,
     CustomUserCreationForm,
     CustomAuthenticationForm,
     BookFilterForm
 )
 from .models import Book
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from rest_framework import viewsets
 from .serializers import BookSerializer
 
@@ -80,3 +82,34 @@ def books(request):
             request=request
         )
         return JsonResponse(data)
+
+
+def multiple_edit(request):
+    if request.method == 'POST':
+        ids = request.POST.get('ids')
+        ids = ids.split(",")
+        for id in ids:
+            obj = get_object_or_404(Book, pk=id)
+            if request.POST.get('title'):
+                obj.title = request.POST.get('title')
+            if request.POST.get('author'):
+                obj.author = request.POST.get('author')
+            if request.POST.get('price'):
+                obj.price = request.POST.get('price')
+            obj.save()
+        return redirect('index')
+    else:
+        form = Bookform()
+
+    context = {'form': form}
+    return render(request, 'examples/_modal.html', context)
+
+def multiple_delete(request):
+    if request.method == 'POST':
+        ids = request.POST.getlist('books_ids[]')
+        for id in ids:
+            obj = get_object_or_404(Book, pk=id)
+            obj.delete()
+        return JsonResponse(True, safe=False)
+    else:
+        return redirect('index')

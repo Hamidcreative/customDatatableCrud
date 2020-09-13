@@ -8,10 +8,10 @@ class Book(models.Model):
         (PAPERBACK, 'Paperback'),
         (EBOOK, 'E-book'),
     )
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50,blank=True)
     publication_date = models.DateField(null=True)
     author = models.CharField(max_length=30, blank=True)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2,blank=True)
     pages = models.IntegerField(blank=True, null=True)
     book_type = models.PositiveSmallIntegerField(choices=BOOK_TYPES)
 
